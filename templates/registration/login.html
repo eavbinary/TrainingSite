@@ -1,0 +1,29 @@
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table align="center">
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        {% if form.errors %}
+            <tr>
+                <td colspan="2" align="center">
+                    <span style="color: red; ">
+                        Имя пользователя и пароль не верные.
+                    </span>
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" value="login">
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+

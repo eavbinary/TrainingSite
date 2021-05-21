@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <H1>{{ object.name }}</H1>
+    {{ object.description|linebreaks }}<hr>
+    <a href="{% url 'core:course_edit' course_pk=object.pk %}">Редактировать</a> |
+    <a href="{% url 'core:course_delete' course_pk=object.pk %}">Удалить</a>
+
+{% endblock %}

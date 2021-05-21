@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>Список курсов</h1>
+    {% if people.is_teacher %}
+        <a href="{% url 'core:course_create'%}">Добавить</a>
+    {% endif %}
+    <ul>
+        {% for item in object_list %}
+            <li>
+
+                <a href="{% url 'core:course' course_pk=item.pk %}">
+                    {{ item.name|capfirst }}
+
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

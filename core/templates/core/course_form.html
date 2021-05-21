@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    {% if object.id > 0 %}
+        <H1>Курс "{{ object.name }}"</H1>
+    {% else %}
+        <H1>Новый курс</H1>
+    {% endif %}
+    {{ form.id }}
+    <form method="post">
+        {% csrf_token %}
+        Наименование: {{ form.name }}
+        <br>
+        Описание:<br>
+        {{ form.description }}<br>
+        <input type="submit" value="Записать">
+
+    </form>
+
+{% endblock %}

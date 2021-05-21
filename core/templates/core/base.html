@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {{ page_name|default:"страница"|title }}
+    </title>
+</head>
+<body>
+{% block menu %}
+    <a href="{%  url 'core:course_list'  %}">Каталог</a> |
+    <a>Группы</a> |
+    <a>Расписание</a> |
+    {% if people.user.first_name or people.user.last_name %}
+        {{ people.user.first_name}} {{ people.user.last_name  }} |
+    {%  else %}
+        {{ people.user }} |
+    {% endif %}
+    <a href="{%  url 'logout'  %}">Выход</a>
+{% endblock menu %}
+
+{% block content %}
+    <h1>Добро пожаловать {{ people.user }}!!! </h1>
+{% endblock %}
+</body>
+</html>

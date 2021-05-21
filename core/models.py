@@ -18,6 +18,8 @@ class People(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=120, default='', null=False, blank=False,
                             verbose_name='Наименование')
+    description = models.TextField(default='', null=False, blank=False,
+                                   verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Курс'

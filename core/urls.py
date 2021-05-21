@@ -13,18 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include, reverse_lazy
-from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
+from django.urls import path, include
+import core.views as views
+
+app_name = 'core'
+
 
 urlpatterns = [
-
-    path('', include('core.urls', namespace='core')),
-    path('admin/', admin.site.urls),
-
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),
-    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='core:home')),
-    path('accounts/profile/', RedirectView.as_view(pattern_name='core:home', permanent=True)),
+    path('', views.index, name='home'),
+    path('course', views.CourseList.as_view(), name='course_list'),
+    path('course/<int:course_pk>', views.CourseViewDetail.as_view(), name='course'),
+    path('course/delete/<int:course_pk>', views.CourseDeleteView.as_view(), name='course_delete'),
+    path('course/edit/<int:course_pk>', views.CourseUpdateView.as_view(), name='course_edit'),
+    path('course/create', views.CourseCreateView.as_view(), name='course_create'),
 ]
