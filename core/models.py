@@ -5,8 +5,7 @@ from django.db import models
 class People(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.PROTECT, null=False,
                                 verbose_name='Учетная запись')
-    is_teacher = models.BooleanField(default=False, null=False,
-                                     verbose_name='Преподавтель')
+    is_teacher = models.BooleanField(verbose_name='Преподавтель')
 
     class Meta:
         verbose_name = 'Участник сообщества'

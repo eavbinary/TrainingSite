@@ -21,7 +21,7 @@ class StudentGroupAdmin(admin.ModelAdmin):
 
 class PeopleInGroupForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        super(PeopleInGroupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['student'].queryset = People.objects.filter(is_teacher=False)
 
 
@@ -33,7 +33,7 @@ class PeopleInGroupAdmin(admin.ModelAdmin):
 
 class ScheduleForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        super(ScheduleForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['teacher'].queryset = People.objects.filter(is_teacher=True)
 
 
