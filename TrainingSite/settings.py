@@ -25,7 +25,7 @@ SECRET_KEY = '_ufgq08tiizvi#m%d%nre+%sjn0u3f58ylm2r&3$=qc*30cs96'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_rq',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     'core.apps.CoreConfig',
 
@@ -132,11 +134,16 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
-
 RQ_QUEUES = {
     'default': {
         'HOST': '172.20.208.1',
         'PORT': 6379,
         'DB': 0,
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
 }
