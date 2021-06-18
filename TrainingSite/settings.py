@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_rq',
+
     'core.apps.CoreConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -120,3 +124,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGOUT_REDIRECT_URL = 'core:home'
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': '172.20.208.1',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}

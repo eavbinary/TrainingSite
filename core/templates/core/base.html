@@ -16,6 +16,7 @@
     {%  else %}
         {{ people.user }} |
     {% endif %}
+    <a href="{% url 'core:contact' %}">Контакты</a> |
     <a href="{%  url 'logout'  %}">Выход</a>
 {% endblock menu %}
 

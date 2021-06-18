@@ -1,10 +1,15 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.forms import Form, CharField, Textarea, EmailField, BooleanField
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
+from django.core.mail import send_mail
+import django_rq
 
 from core.models import Course, People
+from core.tasks import send_mail_rq
 
 
 def index(request):
@@ -44,7 +49,38 @@ class CourseUpdateView(PeopleContextMixin, UpdateView):
     template_name_suffix = '_form'
     success_url = reverse_lazy('core:course_list')
 
+
 class CourseDeleteView(PeopleContextMixin, DeleteView):
     model = Course
     pk_url_kwarg = 'course_pk'
-    success_url =  reverse_lazy('core:course_list')
+    success_url = reverse_lazy('core:course_list')
+
+
+class ContactForm(Form):
+    subject = CharField(max_length=100)
+    sender = EmailField()
+    message = CharField(widget=Textarea)
+
+    def send_email(self):
+        subject = self.cleaned_data['subject']
+        message = self.cleaned_data['message']
+        address = self.cleaned_data['sender']
+        line = '-' * 20
+
+        # Письмо администратору
+        admin_email = User.objects.get(is_superuser=True, email__contains='@').email
+        job = django_rq.enqueue(send_mail_rq, admin_email, f'Запрос от {address}',
+                                f'Тема: {subject}\n{line}\n{message}')
+        # Письмо пользователю
+        job = django_rq.enqueue(send_mail_rq, address, f'Ваш запрос на TrainingSite принят',
+                                f'Тема: {subject}\n{line}\n{message}')
+
+
+class ContactFormView(FormView):
+    template_name = 'core\contact.html'
+    form_class = ContactForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)
