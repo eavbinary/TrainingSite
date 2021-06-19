@@ -5,12 +5,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView
 import django_rq
 
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny, IsAuthenticated
-
 from core.models import Course, People
 from core.tasks import send_mail_rq
-from core.serializer import CourseSerializer, PeopleSerializer
+
 
 
 def index(request):
@@ -57,8 +54,6 @@ class CourseDeleteView(PeopleContextMixin, DeleteView):
     success_url = reverse_lazy('core:course_list')
 
 
-
-
 class ContactForm(Form):
     subject = CharField(max_length=100)
     sender = EmailField()
@@ -88,31 +83,4 @@ class ContactFormView(FormView):
         form.send_email()
         return super().form_valid(form)
 
-
-class CourseItemViewSet(ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-
-    permission_classes_by_action = {'create': [IsAuthenticated],
-                                    'list': [AllowAny]}
-
-    def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            if self.action:
-                action_func = getattr(self, self.action, {})
-                action_func_kwargs = getattr(action_func, 'kwargs', {})
-                permission_classes = action_func_kwargs.get('permission_classes')
-            else:
-                permission_classes = None
-
-            return [permission() for permission in (permission_classes or self.permission_classes)]
-
-
-class PeopleItemViewSet(ModelViewSet):
-    queryset = People.objects.all()
-    serializer_class = PeopleSerializer
-
-    permission_classes = [IsAuthenticated]
 
