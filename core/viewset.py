@@ -1,31 +1,22 @@
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, BasePermission
 from rest_framework.viewsets import ModelViewSet
 
 from core.models import Course, People
 from core.serializer import CourseSerializer, PeopleSerializer
 
 
-class PermissionModelViewSet(ModelViewSet):
-    def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            if self.action:
-                action_func = getattr(self, self.action, {})
-                action_func_kwargs = getattr(action_func, 'kwargs', {})
-                permission_classes = action_func_kwargs.get('permission_classes')
-            else:
-                permission_classes = None
-
-            return [permission() for permission in (permission_classes or self.permission_classes)]
+class AppPermission(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
+        else:
+            return bool(request.user and request.user.is_authenticated)
 
 
-class CourseItemViewSet(PermissionModelViewSet):
+class CourseItemViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-
-    permission_classes_by_action = {'create': [IsAuthenticated],
-                                    'list': [AllowAny]}
+    permission_classes = [AppPermission]
 
 
 class PeopleItemViewSet(ModelViewSet):
