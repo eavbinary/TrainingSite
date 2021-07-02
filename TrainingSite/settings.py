@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_rq',
     'rest_framework',
     'rest_framework.authtoken',
+    'graphene_django',
 
     'core.apps.CoreConfig',
 
@@ -146,4 +147,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+GRAPHENE = {
+    "SCHEMA": "core.schema.schema"
 }
