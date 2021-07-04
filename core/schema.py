@@ -55,13 +55,13 @@ class Query(graphene.ObjectType):
     def resolve_people(self, info):
        result = People.objects.all()
        return result
-    #
+
     def resolve_teacher(self, info):
-       result = People.objects.all().filter(is_teacher=True)
+       result = People.objects.filter(is_teacher=True)
        return result
 
     def resolve_student(self, info):
-       result = People.objects.all().filter(is_teacher=False)
+       result = People.objects.filter(is_teacher=False)
        return result
 
     def resolve_student_group(self, info):
@@ -81,7 +81,7 @@ class Query(graphene.ObjectType):
        return result
 
     def resolve_people_in_group_filter(self, info, group_id):
-        result = PeopleInGroup.objects.all().filter(group_id=group_id)
+        result = PeopleInGroup.objects.filter(group_id=group_id)
         return result
 
     def resolve_schedule(self, info):
