@@ -9,7 +9,7 @@
 <body>
 {% block menu %}
     <a href="{%  url 'core:course_list'  %}">Каталог</a> |
-    <a>Группы</a> |
+    <a href="{%  url 'core:peopleingroup_list'  %}">Студенты</a> |
     <a>Расписание</a> |
     {% if people.user.first_name or people.user.last_name %}
         {{ people.user.first_name}} {{ people.user.last_name  }} |

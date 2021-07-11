@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
-from core.models import Course, People
+from core.models import Course, People, StudentGroup, PeopleInGroup
 
 
 def index(request):
@@ -16,7 +16,7 @@ def index(request):
 class PeopleContextMixin:
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        context['people'] = People.objects.select_related().get(user_id=self.request.user.id)
+        context['people'] = People.objects.all().select_related('user').get(user_id=self.request.user.id)
         return context
 
 
@@ -47,3 +47,14 @@ class CourseDeleteView(PeopleContextMixin, DeleteView):
     model = Course
     pk_url_kwarg = 'course_pk'
     success_url = reverse_lazy('core:course_list')
+
+
+class PeopleInGroupList(ListView):
+    model = PeopleInGroup
+
+    def get_queryset(self):
+        requests = PeopleInGroup.objects.all()\
+            .prefetch_related('student__user','group')\
+            .select_related('student','group')\
+            .order_by('-student__user')
+        return requests

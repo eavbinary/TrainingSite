@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>Список Студентов</h1>
+    <ul>
+        {% for item in object_list %}
+            <li>
+
+{#                <a href="{% url 'core:course' course_pk=item.pk %}">#}
+{#                    {{ item.name|capfirst }}#}
+{##}
+{#                </a>#}
+            {{ item.student.user }}({{ item.group.name }})
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
