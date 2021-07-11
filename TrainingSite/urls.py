@@ -1,3 +1,4 @@
+import debug_toolbar
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth import views as auth_views
@@ -11,6 +12,7 @@ urlpatterns = [
 
     path('api-auth/', include('rest_framework.urls')),
     path("graphql", GraphQLView.as_view(graphiql=True)),
+    path('__debug__/', include(debug_toolbar.urls)),
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html')),

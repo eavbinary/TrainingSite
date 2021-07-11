@@ -26,7 +26,10 @@ SECRET_KEY = '_ufgq08tiizvi#m%d%nre+%sjn0u3f58ylm2r&3$=qc*30cs96'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+INTERNAL_IPS = [
+    '127.0.0.1',
+    '0.0.0.0',
+]
 
 # Application definition
 
@@ -38,16 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
     'django_rq',
     'rest_framework',
     'rest_framework.authtoken',
     'graphene_django',
+
 
     'core.apps.CoreConfig',
 
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'TrainingSite.urls'
@@ -125,7 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+STATIC_ROOT = 'static/'
 LOGOUT_REDIRECT_URL = 'core:home'
 
 EMAIL_USE_TLS = False
@@ -152,3 +160,4 @@ REST_FRAMEWORK = {
 GRAPHENE = {
     "SCHEMA": "core.schema.schema"
 }
+

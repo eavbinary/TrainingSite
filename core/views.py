@@ -16,7 +16,7 @@ def index(request):
 class PeopleContextMixin:
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        context['people'] = People.objects.get(user_id=self.request.user.id)
+        context['people'] = People.objects.select_related().get(user_id=self.request.user.id)
         return context
 
 
