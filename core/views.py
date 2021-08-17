@@ -6,11 +6,11 @@ from core.models import Course, People, StudentGroup, PeopleInGroup
 
 
 def index(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-
-    context = {'people': People.objects.get(user_id=request.user.id)}
-    return render(request, 'core/base.html', context)
+    # if not request.user.is_authenticated:
+    #     return redirect('login')
+    #
+    # context = {'people': People.objects.get(user_id=request.user.id)}
+    return render(request, 'index.html')
 
 
 class PeopleContextMixin:

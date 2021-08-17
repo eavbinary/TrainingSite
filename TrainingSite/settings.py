@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'debug_toolbar',
-    'django_rq',
+    # 'debug_toolbar',
+    # 'django_rq',
     'rest_framework',
     'rest_framework.authtoken',
-    'graphene_django',
+    # 'graphene_django',
 
 
     'core.apps.CoreConfig',
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -146,13 +146,13 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
-RQ_QUEUES = {
-    'default': {
-        'HOST': '172.20.208.1',
-        'PORT': 6379,
-        'DB': 0,
-    }
-}
+# RQ_QUEUES = {
+#     'default': {
+#         'HOST': '172.20.208.1',
+#         'PORT': 6379,
+#         'DB': 0,
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-GRAPHENE = {
-    "SCHEMA": "core.schema.schema"
-}
+# GRAPHENE = {
+#     "SCHEMA": "core.schema.schema"
+# }
 
