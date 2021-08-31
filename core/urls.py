@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 import core.views as views
 from . import forms
-from .viewset import CourseItemViewSet, PeopleItemViewSet
+from .viewset import CourseItemViewSet, PeopleItemViewSet, ScheduleItemViewSet
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -13,6 +13,7 @@ app_name = 'core'
 router = DefaultRouter()
 router.register('course', CourseItemViewSet)
 router.register('people', PeopleItemViewSet)
+router.register('schedule', ScheduleItemViewSet)
 
 urlpatterns = [
      path('', views.index, name='home'),

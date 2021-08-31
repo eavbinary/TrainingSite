@@ -1,6 +1,6 @@
 from django.db.models import Model
 from rest_framework import serializers
-from .models import Course, People
+from .models import Course, People, Schedule
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -28,6 +28,12 @@ class PeopleSerializer(serializers.ModelSerializer):
         view_name = 'people'
 
 
+class ScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Schedule
+        fields = 'id', 'class_date', 'teacher', 'group'
+        view_name = 'schedule'
+        depth = 2
 
 
 
